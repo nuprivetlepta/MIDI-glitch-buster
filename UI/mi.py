@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSlider, QSpacerItem, QVBoxLayout,
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPlainTextEdit,
+    QPushButton, QSizePolicy, QSlider, QVBoxLayout,
     QWidget)
 
 class Ui_Form(object):
@@ -34,10 +34,12 @@ class Ui_Form(object):
         Form.setFont(font)
         self.layoutWidget = QWidget(Form)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 0, 791, 173))
-        self.horizontalLayout = QHBoxLayout(self.layoutWidget)
+        self.layoutWidget.setGeometry(QRect(10, 0, 781, 591))
+        self.verticalLayout_5 = QVBoxLayout(self.layoutWidget)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.pushButton = QPushButton(self.layoutWidget)
@@ -80,13 +82,12 @@ class Ui_Form(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
-        self.layoutWidget1 = QWidget(Form)
-        self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(17, 190, 774, 121))
-        self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget1)
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout)
+
+        self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.label_4 = QLabel(self.layoutWidget1)
+        self.label_4 = QLabel(self.layoutWidget)
         self.label_4.setObjectName(u"label_4")
         font3 = QFont()
         font3.setFamilies([u"Georgia"])
@@ -99,7 +100,7 @@ class Ui_Form(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_3 = QLabel(self.layoutWidget1)
+        self.label_3 = QLabel(self.layoutWidget)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setEnabled(False)
 
@@ -111,36 +112,40 @@ class Ui_Form(object):
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_3)
 
-        self.widget = QWidget(Form)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(10, 320, 123, 281))
-        self.verticalLayout_4 = QVBoxLayout(self.widget)
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_3)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.verticalLayout_4 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.pushButton_3 = QPushButton(self.widget)
+        self.pushButton_3 = QPushButton(self.layoutWidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setMinimumSize(QSize(50, 60))
+        self.pushButton_3.setMinimumSize(QSize(100, 60))
 
         self.verticalLayout_4.addWidget(self.pushButton_3)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer)
-
-        self.verticalSlider = QSlider(self.widget)
+        self.verticalSlider = QSlider(self.layoutWidget)
         self.verticalSlider.setObjectName(u"verticalSlider")
         self.verticalSlider.setOrientation(Qt.Vertical)
 
         self.horizontalLayout_4.addWidget(self.verticalSlider)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_2)
-
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_4)
+
+
+        self.horizontalLayout_5.addLayout(self.verticalLayout_4)
+
+        self.plainTextEdit = QPlainTextEdit(self.layoutWidget)
+        self.plainTextEdit.setObjectName(u"plainTextEdit")
+
+        self.horizontalLayout_5.addWidget(self.plainTextEdit)
+
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_5)
 
 
         self.retranslateUi(Form)
@@ -153,10 +158,10 @@ class Ui_Form(object):
         self.pushButton.setText(QCoreApplication.translate("Form", u"Open connection", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"Close connection", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Device is not defined", None))
-        self.label_4.setText(QCoreApplication.translate("Form", u"1. Push a button or drag a fader that needs to be checked. \n"
-"2. Push \"Take selection\" or reset if mistaken.\n"
-"3. Wait 3 seconds until the message pops.", None))
+        self.label_4.setText(QCoreApplication.translate("Form", u"1. Push a button or drag a fader to 100% that needs to be checked. \n"
+"2. Wait for 3 seconds until the result message pops.\n"
+"3. Continue operation with other buttons if needed.", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"Note name will be showed here...", None))
-        self.pushButton_3.setText(QCoreApplication.translate("Form", u"PushButton", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Form", u"Clear log", None))
     # retranslateUi
 
