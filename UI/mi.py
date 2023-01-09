@@ -100,11 +100,15 @@ class Ui_Form(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_3 = QLabel(self.layoutWidget)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setEnabled(False)
+        self.pushButton_3 = QPushButton(self.layoutWidget)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setMinimumSize(QSize(0, 80))
+        font4 = QFont()
+        font4.setFamilies([u"Georgia"])
+        font4.setPointSize(25)
+        self.pushButton_3.setFont(font4)
 
-        self.horizontalLayout_2.addWidget(self.label_3)
+        self.horizontalLayout_2.addWidget(self.pushButton_3)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
@@ -119,11 +123,11 @@ class Ui_Form(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.verticalLayout_4 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.pushButton_3 = QPushButton(self.layoutWidget)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setMinimumSize(QSize(100, 60))
+        self.pushButton_4 = QPushButton(self.layoutWidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setMinimumSize(QSize(100, 60))
 
-        self.verticalLayout_4.addWidget(self.pushButton_3)
+        self.verticalLayout_4.addWidget(self.pushButton_4)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -159,9 +163,9 @@ class Ui_Form(object):
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"Close connection", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Device is not defined", None))
         self.label_4.setText(QCoreApplication.translate("Form", u"1. Push a button or drag a fader to 100% that needs to be checked. \n"
-"2. Wait for 3 seconds until the result message pops.\n"
+"2. Hold a finger on controller and shake your finger to see is signal ok or not. \n"
 "3. Continue operation with other buttons if needed.", None))
-        self.label_3.setText(QCoreApplication.translate("Form", u"Note name will be showed here...", None))
         self.pushButton_3.setText(QCoreApplication.translate("Form", u"Clear log", None))
+        self.pushButton_4.setText(QCoreApplication.translate("Form", u"Note button", None))
     # retranslateUi
 

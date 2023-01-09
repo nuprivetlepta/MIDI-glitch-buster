@@ -124,7 +124,7 @@
         </property>
         <property name="text">
          <string>1. Push a button or drag a fader to 100% that needs to be checked. 
-2. Wait for 3 seconds until the result message pops.
+2. Hold a finger on controller and shake your finger to see is signal ok or not. 
 3. Continue operation with other buttons if needed.</string>
         </property>
        </widget>
@@ -134,12 +134,21 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label_3">
-            <property name="enabled">
-             <bool>false</bool>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Georgia</family>
+              <pointsize>25</pointsize>
+             </font>
             </property>
             <property name="text">
-             <string>Note name will be showed here...</string>
+             <string>Clear log</string>
             </property>
            </widget>
           </item>
@@ -154,7 +163,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="pushButton_4">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -162,7 +171,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Clear log</string>
+           <string>Note button</string>
           </property>
          </widget>
         </item>

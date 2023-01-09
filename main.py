@@ -11,13 +11,13 @@ inport = mido.open_input()      # Порт входящего сигнала п�
 class Worker(QtCore.QThread):
     note = QtCore.Signal(str)
     progress = QtCore.Signal(int)
-    message = QtCore.Signal(str)
+    message = QtCore.Signal(mido.Message)
 
     def run(self):
         for msg in inport:
             print(msg)
             self.note.emit(msg.type)
-            self.message.emit(str(msg))
+            self.message.emit(msg)
 
         for i in range(5):
             time.sleep(1)
@@ -40,6 +40,7 @@ class Window(QtWidgets.QWidget):
     def widgetsSetup(self):
         self.ui.verticalSlider.setMinimum(0)
         self.ui.verticalSlider.setMaximum(127)
+        self.ui.pushButton_4.setCheckable(True)
 
     def initSignals(self):
         self.ui.pushButton.clicked.connect(self.ShowName)
@@ -47,7 +48,6 @@ class Window(QtWidgets.QWidget):
         self.ui.pushButton_2.clicked.connect(self.ClearConnection)
         self.ui.pushButton_3.clicked.connect(self.ClearLog)
         self.thread.progress.connect(self.reportProgress)
-        self.thread.note.connect(self.getNotes)
         self.thread.message.connect(self.printMsg)
         self.thread.message.connect(self.SetSlider)
         self.thread.finished.connect(lambda: self.ui.pushButton.setEnabled(True))
@@ -67,7 +67,6 @@ class Window(QtWidgets.QWidget):
             inport.close()
             print(inport.closed)
             self.ui.label_2.setText("Device is not defined")
-            self.ui.label_3.setText('Note name will be showed here...')
         else:
             pass
         print(type(inport))
@@ -81,13 +80,6 @@ class Window(QtWidgets.QWidget):
         self.ui.pushButton.setEnabled(False)
         self.thread.start()
 
-    def getNotes(self, note) -> None:
-        """
-        Приём данных об входящих сигналах MIDI из потока
-        :param note: входящий сигнал
-        :return: None
-        """
-        self.ui.label_3.setText(f"Тип ноты: {note}")
 
     def printMsg(self, msg) -> None:
         """
@@ -95,12 +87,17 @@ class Window(QtWidgets.QWidget):
         :param msg: Полный текст сообщения для добавления в PlainTextEdit
         :return: None
         """
-        self.ui.plainTextEdit.appendPlainText(msg)
+        self.ui.plainTextEdit.appendPlainText(str(msg))
 
     def SetSlider(self, msg):
-        # if msg.type == "control_change":
-        #     self.ui.verticalSlider.setValue(msg.value)
-        pass
+        if msg.type == "control_change":
+            self.ui.verticalSlider.setValue(msg.value)
+        if msg.type == "note_on":
+            self.ui.pushButton_4.setChecked(True)
+            self.ui.pushButton_4.setStyleSheet("background-color:rgb(46, 255, 245)")
+        if msg.type == "note_off":
+            self.ui.pushButton_4.setChecked(False)
+            self.ui.pushButton_4.setStyleSheet("background-color:rgb(236, 236, 236)")
 
 
 
