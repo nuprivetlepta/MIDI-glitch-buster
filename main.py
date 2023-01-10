@@ -7,7 +7,6 @@ from UI.mi import Ui_Form
 
 inport = mido.open_input()      # Порт входящего сигнала по стороннему протоколу
 
-
 class Worker(QtCore.QThread):
     note = QtCore.Signal(str)
     progress = QtCore.Signal(int)
@@ -18,10 +17,6 @@ class Worker(QtCore.QThread):
             print(msg)
             self.note.emit(msg.type)
             self.message.emit(msg)
-
-        for i in range(5):
-            time.sleep(1)
-            self.progress.emit(i)
 
 
 class Window(QtWidgets.QWidget):
