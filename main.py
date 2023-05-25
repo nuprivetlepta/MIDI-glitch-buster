@@ -56,13 +56,11 @@ class Window(QtWidgets.QWidget):
 
     def ShowName(self):
         try:
-            dev_name = self.inport.name
-            self.ui.label_2.setText(dev_name)
+            self.inport = mido.open_input()
+            self.ui.label_2.setText(self.inport.name)
 
         except IOError:
             self.ui.label_2.setText('No active connections')
-
-        print(type(self.thread))
 
     def ClearConnection(self):
         if self.ui.label_2.text != "Device is not defined":
