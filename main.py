@@ -1,20 +1,21 @@
 from PySide6 import QtWidgets, QtCore
-import rtmidi
+import rtmidi   # it's 'python-rtmidi', not 'rtmidi'
 import rtmidi.midiutil
 import mido
 import time
 from UI.mi import Ui_Form
 
-inport = mido.open_input()      # Порт входящего сигнала по стороннему протоколу
-
 
 class Worker(QtCore.QThread):
+    def __init__(self, port):
+        super().__init__()
+        self.inport = port      # Порт входящего сигнала по стороннему протоколу
     note = QtCore.Signal(str)
     progress = QtCore.Signal(int)
     message = QtCore.Signal(mido.Message)
 
     def run(self):
-        for msg in inport:
+        for msg in self.inport:
             print(msg)
             self.note.emit(msg.type)
             self.message.emit(msg)
@@ -27,6 +28,7 @@ class Worker(QtCore.QThread):
 class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
+        self.inport = mido.open_input()
         super().__init__(parent)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
@@ -35,7 +37,7 @@ class Window(QtWidgets.QWidget):
         self.widgetsSetup()
 
     def initThreads(self) -> None:
-        self.thread = Worker()
+        self.thread = Worker(self.inport)
 
     def widgetsSetup(self):
         self.ui.verticalSlider.setMinimum(0)
@@ -54,7 +56,7 @@ class Window(QtWidgets.QWidget):
 
     def ShowName(self):
         try:
-            dev_name = inport.name
+            dev_name = self.inport.name
             self.ui.label_2.setText(dev_name)
 
         except IOError:
@@ -64,12 +66,12 @@ class Window(QtWidgets.QWidget):
 
     def ClearConnection(self):
         if self.ui.label_2.text != "Device is not defined":
-            inport.close()
-            print(inport.closed)
+            self.inport.close()
+            print(self.inport.closed)
             self.ui.label_2.setText("Device is not defined")
         else:
             pass
-        print(type(inport))
+        print(type(self.inport))
         self.ui.pushButton.setEnabled(True)
 
     def runLongProcess(self) -> None:
@@ -79,7 +81,6 @@ class Window(QtWidgets.QWidget):
         """
         self.ui.pushButton.setEnabled(False)
         self.thread.start()
-
 
     def printMsg(self, msg) -> None:
         """
@@ -98,8 +99,6 @@ class Window(QtWidgets.QWidget):
         if msg.type == "note_off":
             self.ui.pushButton_4.setChecked(False)
             self.ui.pushButton_4.setStyleSheet("background-color:rgb(236, 236, 236)")
-
-
 
     def reportProgress(self, progress):
         print(progress)
