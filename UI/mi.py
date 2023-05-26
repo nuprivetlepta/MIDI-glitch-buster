@@ -158,7 +158,7 @@ class Ui_Form(object):
     # setupUi
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"MIDI GLITCH BUSTER", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Open connection", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"Close connection", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Device is not defined", None))
