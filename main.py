@@ -7,9 +7,10 @@ from UI.mi import Ui_Form
 
 
 class Worker(QtCore.QThread):
-    def __init__(self, port):
+    def __init__(self, port=None):
         super().__init__()
         self.inport = port      # Порт входящего сигнала по стороннему протоколу
+        self.is_running = True
     note = QtCore.Signal(str)
     progress = QtCore.Signal(int)
     message = QtCore.Signal(mido.Message)
@@ -22,13 +23,17 @@ class Worker(QtCore.QThread):
 
         for i in range(5):
             time.sleep(1)
+            print(type(self.inport))
             self.progress.emit(i)
+
+    def stop(self):
+        self.is_running = False
+        self.terminate()
 
 
 class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
-        self.inport = mido.open_input()
         super().__init__(parent)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
@@ -37,7 +42,7 @@ class Window(QtWidgets.QWidget):
         self.widgetsSetup()
 
     def initThreads(self) -> None:
-        self.thread = Worker(self.inport)
+        self.thread = Worker()
 
     def widgetsSetup(self):
         self.ui.verticalSlider.setMinimum(0)
@@ -56,21 +61,26 @@ class Window(QtWidgets.QWidget):
 
     def ShowName(self):
         try:
-            self.inport = mido.open_input()
-            self.ui.label_2.setText(self.inport.name)
-
+            self.thread.inport = mido.open_input()
+            print('Po idee tip seichas', type(self.thread.inport))
+            print(self.thread.inport.closed)
+            self.ui.label_2.setText(self.thread.inport.name)
         except IOError:
             self.ui.label_2.setText('No active connections')
 
     def ClearConnection(self):
-        if self.ui.label_2.text != "Device is not defined":
-            self.inport.close()
-            print(self.inport.closed)
+        if type(self.thread.inport) != 'NoneType':
+            print(type(self.thread.inport))
+            self.thread.inport.close()
+            print(self.thread.inport.closed)
             self.ui.label_2.setText("Device is not defined")
         else:
             pass
-        print(type(self.inport))
+        print(type(self.thread.inport))
+
         self.ui.pushButton.setEnabled(True)
+        self.thread.stop()
+
 
     def runLongProcess(self) -> None:
         """
@@ -79,6 +89,7 @@ class Window(QtWidgets.QWidget):
         """
         self.ui.pushButton.setEnabled(False)
         self.thread.start()
+        print('Nachalsya dolgi process')
 
     def printMsg(self, msg) -> None:
         """
