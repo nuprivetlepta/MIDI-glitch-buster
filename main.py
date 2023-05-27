@@ -11,7 +11,8 @@ class Worker(QtCore.QThread):
     def __init__(self, port=None):
         """
         Initialisation of the thread
-        :param port: Input port of third party protocol, "None" by default, mido.open_input in the future.
+        :param port: Input port of third party protocol, "None" by default,
+        mido.open_input after action in method below.
         """
         super().__init__()
         self.inport = port
@@ -87,8 +88,9 @@ class Window(QtWidgets.QWidget):
 
     def ShowName(self):
         """
-        This method gets the name of connected device and set it into label. In case when there is no
-        connection name will be replaced by "No active connections" string
+        Method gets the name of connected device and set it into label. In case when there is no
+        connection name will be replaced by "No active connections" string.
+        Assigns "inport" of our thread as mido.open_input(), thread is starting to receive signals from device.
         :return: None
         """
         try:
@@ -99,7 +101,7 @@ class Window(QtWidgets.QWidget):
 
     def ClearConnection(self):
         """
-        This method closes our inport and since then program won't receive signals from device. After that
+        Method closes our inport and since then program won't receive signals from device. After that
         it closes thread because it's no longer needed and name of label will tell user that there is no devices.
         When there is no active threads method will pass.
         :return: None
@@ -148,7 +150,7 @@ class Window(QtWidgets.QWidget):
 
     def ClearLog(self):
         """
-        Clears a log of actions added into plainTextEdit.
+        Method clears a log of actions added into plainTextEdit.
         :return: None
         """
         self.ui.plainTextEdit.clear()
