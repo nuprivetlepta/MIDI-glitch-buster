@@ -26,10 +26,13 @@ class Worker(QtCore.QThread):
         Workflow of our thread, receives messages from port, emits it into application.
         :return: None
         """
-        for msg in self.inport:
-            print(msg)
-            self.note.emit(msg.type)
-            self.message.emit(msg)
+        if self.inport is None:
+            return None
+        else:
+            for msg in self.inport:
+                print(msg)
+                self.note.emit(msg.type)
+                self.message.emit(msg)
 
     def stop(self):
         """
@@ -106,7 +109,7 @@ class Window(QtWidgets.QWidget):
         When there is no active threads method will pass.
         :return: None
         """
-        if type(self.thread.inport) != 'NoneType':
+        if self.thread.inport is not None:
             self.thread.inport.close()
             self.ui.label_2.setText("Device is not defined")
         else:
